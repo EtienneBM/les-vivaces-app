@@ -1,20 +1,58 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+
+import UserDetail from '../pages/users/UserDetails.vue';
+import UserRegistration from '../pages/users/UserRegistration.vue';
+import UsersList from '../pages/users/UsersList.vue';
+import ProductDetails from '../pages/products/ProductDetails.vue';
+import ProductPublication from '../pages/products/ProductPublication.vue';
+import ProductsList from '../pages/products/ProductsList.vue';
+import ContactUser from '../pages/requests/ContactUser.vue';
+import RequestRecivied from  '../pages/requests/RequestRecivied.vue';
+import Notfound from '../pages/NotFound.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/products'
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/products',
+    component: ProductsList
+  },
+  {
+    path: '/products/:id',
+    component: ProductDetails
+  },
+  {
+    path: '/publish',
+    component: ProductPublication
+  },
+  { 
+    path: '/users',
+    component: UsersList
+  },
+  {
+    path: '/users/:id',
+    component: UserDetail,
+    children: [
+      {
+        path: 'contact',
+        component: ContactUser
+      }
+    ]
+  },
+  {
+    path: '/register',
+    component: UserRegistration
+  },
+  {
+    path: '/requests',
+    component: RequestRecivied
+  },
+  {
+    path: '/:notFound(.*)',
+    component: Notfound
+  },
 ]
 
 const router = createRouter({
