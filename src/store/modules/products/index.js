@@ -8,22 +8,46 @@ export default {
         return {
             products: [
                 {
-                    id : '0001',
+                    id : 'P0001',
                     name: 'Begonia',
                     cost: 15,
                     description: 'Belle plante d\'intérieur',
-                    ownerId: '0001',
-                    category: 'Plante',
+                    ownerId: 'U0001',
+                    category: 'plant',
                 },
                 {
-                    id : '0002',
+                    id : 'P0002',
                     name: 'Piléa',
                     cost: 12,
                     description: 'La plante préférée de Tiphaine',
-                    ownerId: '0001',
-                    category: 'Plante',
+                    ownerId: 'U0001',
+                    category: 'plant',
                 },
-            ]
+                {
+                    id : 'P0003',
+                    name: 'Sécateur',
+                    cost: 20,
+                    description: 'Le truc pour couper des plantes et des doigts si t\'es un psychopate',
+                    ownerId: 'U0002',
+                    category: 'equipment',
+                },
+                {
+                    id : 'P0004',
+                    name: 'Anthurium',
+                    cost: 105,
+                    description: "C'est petit c'est mignon c'est rare",
+                    ownerId: 'U0002',
+                    category: 'cutting',
+                },
+            ],
+            currentProduct: {
+                id : '',
+                name: '',
+                cost: null,
+                description: '',
+                ownerId: '',
+                category: '',
+            }
         };
     },
     mutations,

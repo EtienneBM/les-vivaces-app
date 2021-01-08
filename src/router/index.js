@@ -7,7 +7,7 @@ import ProductDetails from '../pages/products/ProductDetails.vue';
 import ProductPublication from '../pages/products/ProductPublication.vue';
 import ProductsList from '../pages/products/ProductsList.vue';
 import ContactUser from '../pages/requests/ContactUser.vue';
-import RequestRecivied from  '../pages/requests/RequestRecivied.vue';
+import RequestRecivied from '../pages/requests/RequestRecivied.vue';
 import Notfound from '../pages/NotFound.vue'
 
 const routes = [
@@ -17,29 +17,36 @@ const routes = [
   },
   {
     path: '/products',
-    component: ProductsList
+    component: ProductsList,
   },
   {
     path: '/products/:id',
-    component: ProductDetails
+    component: ProductDetails,
+    props: true,
+    children: [
+      {
+        path: 'contact',
+        component: ContactUser,
+      }
+    ]
   },
   {
     path: '/publish',
     component: ProductPublication
   },
-  { 
+  {
     path: '/users',
     component: UsersList
   },
   {
     path: '/users/:id',
     component: UserDetail,
-    children: [
-      {
-        path: 'contact',
-        component: ContactUser
-      }
-    ]
+    // children: [
+    //   {
+    //     path: 'contact',
+    //     component: ContactUser
+    //   }
+    // ]
   },
   {
     path: '/register',

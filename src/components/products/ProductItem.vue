@@ -3,19 +3,11 @@
     <h3>{{ name }}</h3>
     <h4>Prix : {{ cost }} €</h4>
     <div>
-      <span>{{ category }}</span>
+      <base-badge :type="category" :text="category"></base-badge>
     </div>
-    <div class="action">
-      <base-button
-        ><router-link :to="userContactLink">
-          Contacter
-        </router-link></base-button
-      >
-      <base-button
-        ><router-link :to="productDetailsLink">
-          Voir les détails
-        </router-link></base-button
-      >
+    <div class="actions">
+      <base-button link :to="userContactLink" mode="outline">Contacter</base-button>
+      <base-button link :to="productDetailsLink"> Voir les détails </base-button>
     </div>
   </base-card>
 </template>
@@ -31,7 +23,8 @@ export default {
   },
   computed: {
     userContactLink() {
-      return "/users/" + this.ownerId + "/contact";
+      // return "/users/" + this.ownerId + "/contact";
+      return this.$route.path + "/" + this.productId + "/contact";
     },
     productDetailsLink() {
       return this.$route.path + "/" + this.productId;

@@ -8,11 +8,19 @@ export default {
         return {
             users: [
                 {
-                    id: '0001',
+                    id: 'U0001',
                     email: 'john.doe@mail.com',
                     firstNmae: 'John',
                     lastName: 'Doe',
-                    ownProducts: ['0001','0002'],
+                    ownProducts: ['P0001','P0002'],
+                    favoriteProducts: [],
+                },
+                {
+                    id: 'U0002',
+                    email: 'julie.jones@mail.com',
+                    firstNmae: 'Julie',
+                    lastName: 'Jones',
+                    ownProducts: ['P0003','P0004'],
                     favoriteProducts: [],
                 }
             ]

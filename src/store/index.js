@@ -6,10 +6,18 @@ import requestsModule from './modules/requests/index.js';
 
 export default createStore({
   state() {
+    return {
+      currentUserId: 'U0001'
+    }
   },
   mutations: {
   },
   actions: {
+  },
+  getters: {
+    currentUserId(state){
+      return state.currentUserId;
+    },
   },
   modules: {
     products: productsModule,

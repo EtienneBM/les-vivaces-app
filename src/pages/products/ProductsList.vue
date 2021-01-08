@@ -1,10 +1,12 @@
 <template>
-  <section>FILTER</section>
+  <section><product-filter @change-filter="setFilters"></product-filter></section>
   <section>
-    <div class="controls">
-      <button>Refresh</button>
-      <router-link to="/publish"> Ajouter un produit </router-link>
-    </div>
+    <base-card>
+      <div class="controls">
+        <base-button mode="outline" @click="loadProducts">Refresh</base-button>
+        <base-button link to="/publish"> Ajouter un produit </base-button>
+      </div>
+    </base-card>
     <ul v-if="hasProducts">
       <li v-for="product in filteredProducts" :key="product.id">
         <product-item
@@ -22,20 +24,54 @@
 </template>
 
 <script>
-import ProductItem from '../../components/products/ProductItem.vue';
+import ProductItem from "../../components/products/ProductItem.vue";
+import ProductFilter from "../../components/products/ProductFilter.vue";
 
 export default {
-    components: {
-        ProductItem,
-    },
-  computed: {
-    filteredProducts() {
-      return this.$store.getters["products/products"];
-    },
-    hasProducts(){
-        return this.$store.getters['products/hasProducts'];
+  components: {
+    ProductItem,
+    ProductFilter
+  },
+  data() {
+    return {
+      activeFilters: {
+        plant: true,
+        cutting: true,
+        equipment: true,
+      }
     }
   },
+  computed: {
+    filteredProducts() {
+      const products = this.$store.getters["products/products"];
+      return products.filter(product => {
+        if (this.activeFilters.plant && product.category.includes('plant')){
+          return true;
+        }
+        if (this.activeFilters.cutting && product.category.includes('cutting')){
+          return true;
+        }
+        if (this.activeFilters.equipment && product.category.includes('equipment')){
+          return true;
+        }
+        return false;
+      });
+    },
+    hasProducts() {
+      return this.$store.getters["products/hasProducts"];
+    },
+  },
+  methods: {
+    setFilters(updatedFilters){
+      this.activeFilters = updatedFilters;
+    },
+    loadProducts() {
+      this.$store.dispatch('products/loadProducts');
+    },
+  },
+  created(){
+    this.loadProducts();
+  }
 };
 </script>
 
