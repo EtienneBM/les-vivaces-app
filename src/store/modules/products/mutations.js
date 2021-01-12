@@ -7,5 +7,8 @@ export default {
     },
     setProducts(state, payload) {
         state.products = payload;
+    },
+    setFetchTimestamp(state){
+        state.lastFetch = new Date().getTime();
     }
 };

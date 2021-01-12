@@ -1,9 +1,6 @@
 export default {
     async addProduct(context, data) {
-        const ID = Math.random().toString(36).substr(2, 9);
-
-        const productId = 'prod_' + ID;
-        console.log(productId);
+        const productId = 'prod_' + Math.random().toString(36).substr(2, 9);
 
         const productData = {
             name: data.name,
@@ -12,13 +9,12 @@ export default {
             ownerId: context.rootGetters.currentUserId,
             category: data.category,
         };
-
-        const response = await fetch(`https://learning-vue-1412-default-rtdb.europe-west1.firebasedatabase.app/products/${productId}.json`, {
+        
+        const token = context.rootGetters.token;
+        const response = await fetch(`https://learning-vue-1412-default-rtdb.europe-west1.firebasedatabase.app/products/${productId}.json?auth=` + token, {
             method: 'PUT',
             body: JSON.stringify(productData),
         });
-
-        console.log(response);
 
         // const responseData = await response.json();
 
@@ -36,12 +32,17 @@ export default {
         context.commit('addCurrentProduct', data);
     },
 
-    async loadProducts(context) {
+    async loadProducts(context, payload) {
+        if(!payload.forceRefresh && !context.getters.shouldUpdate){
+            return;
+        }
+
         const response = await fetch(`https://learning-vue-1412-default-rtdb.europe-west1.firebasedatabase.app/products.json`);
         const responseData = await response.json();
 
         if (!response.ok) {
-            //errror ...
+            const error = new Error(response.message || 'Failed to fetch');
+            throw error;
         }
 
         const products = [];
@@ -58,7 +59,8 @@ export default {
             products.push(prod);
         }
 
-        context.commit('setProducts', products)
+        context.commit('setProducts', products);
+        context.commit('setFetchTimestamp');
     }
 
 };

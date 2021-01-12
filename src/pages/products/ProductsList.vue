@@ -1,13 +1,22 @@
 <template>
-  <section><product-filter @change-filter="setFilters"></product-filter></section>
+  <base-dialog :show="!!error" title="Il y a eu un problème" @close="handleError"><!-- 2 exclamation mark convert String to Boolean Value -->
+    <p>{{ error }}</p>
+  </base-dialog>
+  <section>
+    <product-filter @change-filter="setFilters"></product-filter>
+  </section>
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline" @click="loadProducts">Refresh</base-button>
-        <base-button link to="/publish"> Ajouter un produit </base-button>
+        <base-button mode="outline" @click="loadProducts(true)">Refresh</base-button>
+        <base-button link to="/auth?redirect=publish" v-if="!isLoggedIn">Login pour ajouter un produit</base-button>
+        <base-button v-if="isLoggedIn && !isLoading" link to="/publish">
+          Ajouter un produit
+        </base-button>
       </div>
     </base-card>
-    <ul v-if="hasProducts">
+    <div v-if="isLoading"><base-spinner></base-spinner></div>
+    <ul v-else-if="hasProducts">
       <li v-for="product in filteredProducts" :key="product.id">
         <product-item
           :name="product.name"
@@ -30,48 +39,68 @@ import ProductFilter from "../../components/products/ProductFilter.vue";
 export default {
   components: {
     ProductItem,
-    ProductFilter
+    ProductFilter,
   },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
         plant: true,
         cutting: true,
         equipment: true,
-      }
-    }
+      },
+    };
   },
   computed: {
     filteredProducts() {
       const products = this.$store.getters["products/products"];
-      return products.filter(product => {
-        if (this.activeFilters.plant && product.category.includes('plant')){
+      return products.filter((product) => {
+        if (this.activeFilters.plant && product.category.includes("plant")) {
           return true;
         }
-        if (this.activeFilters.cutting && product.category.includes('cutting')){
+        if (
+          this.activeFilters.cutting &&
+          product.category.includes("cutting")
+        ) {
           return true;
         }
-        if (this.activeFilters.equipment && product.category.includes('equipment')){
+        if (
+          this.activeFilters.equipment &&
+          product.category.includes("equipment")
+        ) {
           return true;
         }
         return false;
       });
     },
+    isLoggedIn(){
+      return this.$store.getters.isAuthenticated;
+    },
     hasProducts() {
-      return this.$store.getters["products/hasProducts"];
+      return !this.isLoading || this.$store.getters["products/hasProducts"];
     },
   },
   methods: {
-    setFilters(updatedFilters){
+    setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadProducts() {
-      this.$store.dispatch('products/loadProducts');
+    async loadProducts(refresh = false) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("products/loadProducts",{forceRefresh: refresh});
+      } catch (error) {
+        this.error = error.message || "Soucis de chargement";
+      }
+      this.isLoading = false;
     },
+    handleError() {
+      this.error = null;
+    }
   },
-  created(){
+  created() {
     this.loadProducts();
-  }
+  },
 };
 </script>
 

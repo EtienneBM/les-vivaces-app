@@ -43,7 +43,6 @@ export default {
         message: this.message,
         ownerId: this.$store.getters['products/currentProduct'].ownerId, // access Id from product object -> composant non réutilisable sur une page non liée à un produit
       };
-      console.log(data);
       this.$store.dispatch("requests/contactUser", data);
       this.$router.replace('/products');
     },

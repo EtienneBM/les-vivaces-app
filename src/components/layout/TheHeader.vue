@@ -4,18 +4,38 @@
       <h1><router-link to="/">Trouvez votre plante </router-link></h1>
       <ul>
         <li><router-link to="/products">Toutes les plantes</router-link></li>
-        <li><router-link to="/requests">Mes demandes</router-link></li>
+        <li v-if="isLoggedIn">
+          <router-link to="/requests">Mes demandes</router-link>
+        </li>
+        <li v-else><router-link to="/auth">Login</router-link></li>
+        <li v-if="isLoggedIn"><base-button @click="logout">Logout</base-button></li>
         <!-- <li><router-link to="/users/:id">Mon profil</router-link></li> -->
       </ul>
     </nav>
   </header>
 </template>
 
+<script>
+export default {
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
+  },
+  methods: {
+    logout(){
+      this.$store.dispatch('logout');
+      this.$router.replace('/');
+    }
+  }
+};
+</script>
+
 <style scoped>
 header {
   width: 100%;
   height: 5rem;
-  background-color: #96D49E;
+  background-color: #96d49e;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +52,7 @@ header a {
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #FFA567;
+  border: 1px solid #ffa567;
 }
 
 h1 {

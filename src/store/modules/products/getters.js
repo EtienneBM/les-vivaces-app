@@ -8,4 +8,12 @@ export default {
     currentProduct(state){
         return state.currentProduct;
     },
+    shouldUpdate(state){
+        const lastFetch = state.lastFetch;
+        if(!lastFetch){
+            return true;
+        }
+        const currentTimestamp = new Date().getTime();
+        return (currentTimestamp - lastFetch) / 1000 > 60;
+    }
 };
