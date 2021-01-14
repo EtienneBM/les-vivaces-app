@@ -1,14 +1,29 @@
 <template>
   <base-card>
-    <h3>{{ name }}</h3>
-    <h4>Prix : {{ cost }} €</h4>
-    <div>
-      <base-badge :type="category" :text="category"></base-badge>
+    <div class="img_class">
+      <img src="../../assets/Begonia_1.jpg" alt="Bégonia" />
     </div>
-    <div class="actions">
-      <base-button link :to="userContactLink" mode="outline">Contacter</base-button>
-      <base-button link :to="productDetailsLink"> Voir les détails </base-button>
-    </div>
+    <section>
+      <head>
+        <div>
+          <h3>{{ name }}</h3>
+          <h4>Prix : {{ cost }} €</h4>
+        </div>
+        <div>
+          <base-imagebadge :text="category"></base-imagebadge>
+          <!-- <base-badge :type="category" :text="category"></base-badge> -->
+        </div>
+      </head>
+
+      <div class="actions">
+        <base-button link :to="userContactLink" mode="outline">
+          Contacter
+        </base-button>
+        <base-button link :to="productDetailsLink">
+          Voir les détails
+        </base-button>
+      </div>
+    </section>
   </base-card>
 </template>
 
@@ -50,12 +65,26 @@ h4 {
   margin: 0.5rem 0;
 }
 
-div {
-  margin: 0.5rem 0;
+section {
+  padding: 1rem;
+}
+
+.img_class img {
+  width: 100%;
+  max-height: 20rem;
+  display: flex;
+  justify-content: center;
+  object-fit: cover;
 }
 
 .actions {
+  margin: 1rem;
   display: flex;
   justify-content: flex-end;
+}
+
+head {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

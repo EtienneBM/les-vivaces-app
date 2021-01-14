@@ -2,12 +2,10 @@
   <base-dialog :show="!!error" title="Il y a eu un problème" @close="handleError"><!-- 2 exclamation mark convert String to Boolean Value -->
     <p>{{ error }}</p>
   </base-dialog>
-  <section>
-    <product-filter @change-filter="setFilters"></product-filter>
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
+  <section class="fixed_element">
+    <product-filter @change-filter="setFilters" class="control-card"></product-filter>
+    <base-card >
+      <div class="control-card controls">
         <base-button mode="outline" @click="loadProducts(true)">Refresh</base-button>
         <base-button link to="/auth?redirect=publish" v-if="!isLoggedIn">Login pour ajouter un produit</base-button>
         <base-button v-if="isLoggedIn && !isLoading" link to="/publish">
@@ -15,6 +13,9 @@
         </base-button>
       </div>
     </base-card>
+  </section>
+  <section>
+    
     <div v-if="isLoading"><base-spinner></base-spinner></div>
     <ul v-else-if="hasProducts">
       <li v-for="product in filteredProducts" :key="product.id">
@@ -114,5 +115,14 @@ ul {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+.control-card {
+  padding: 1rem;
+}
+
+.fixed_element{
+  position: fixed;
+  margin-left: 2rem;
 }
 </style>

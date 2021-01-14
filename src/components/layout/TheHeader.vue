@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/">Trouvez votre plante </router-link></h1>
+      <h1><router-link to="/">Les Vivaces</router-link></h1>
       <ul>
         <li><router-link to="/products">Toutes les plantes</router-link></li>
         <li v-if="isLoggedIn">
@@ -39,6 +39,8 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
 }
 
 header a {
@@ -52,7 +54,7 @@ header a {
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #ffa567;
+  border: 1px solid #2E662B;
 }
 
 h1 {

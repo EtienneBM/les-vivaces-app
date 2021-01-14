@@ -42,5 +42,6 @@ html {
 
 body {
   margin: 0;
+  margin-top: 6rem;
 }
 </style>

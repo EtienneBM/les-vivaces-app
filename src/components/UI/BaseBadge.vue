@@ -8,6 +8,9 @@
 export default {
     props: ['type','text'],
     computed: {
+      // printedLogo(){
+      //   return '../../assets/'+this.text+'_logo.png';
+      // },
       printedText(){
         if(this.text === 'plant'){
           return 'Plante';
@@ -34,22 +37,22 @@ export default {
 }
 
 .plant {
-  background-color: #008d18;
+  background-color: #2E662B;
   color: white;
 }
 
 .cutting {
-  background-color: #1f008d;
+  background-color: #98D84A;
   color: white;
 }
 
 .equipment {
-  background-color: #8d006e;
+  background-color: #FFA567;
   color: white;
 }
 
 .undefined {
-  background-color: #8d8b00;
+  background-color: #E0E0E0;
   color: white;
 }
 </style>

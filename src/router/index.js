@@ -1,14 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 //import pages
-import UserDetail from '../pages/users/UserDetails.vue';
-import ProductDetails from '../pages/products/ProductDetails.vue';
-import ProductPublication from '../pages/products/ProductPublication.vue';
+// import UserDetail from '../pages/users/UserDetails.vue';
+// import ProductDetails from '../pages/products/ProductDetails.vue';
+// import ProductPublication from '../pages/products/ProductPublication.vue';
 import ProductsList from '../pages/products/ProductsList.vue';
-import ContactUser from '../pages/requests/ContactUser.vue';
-import RequestRecivied from '../pages/requests/RequestRecivied.vue';
+// import ContactUser from '../pages/requests/ContactUser.vue';
+// import RequestRecivied from '../pages/requests/RequestRecivied.vue';
 import Notfound from '../pages/NotFound.vue'
-import UserAuth from '../pages/auth/UserAuth.vue';
+// import UserAuth from '../pages/auth/UserAuth.vue';
+
+//composant n'ayant pas besoin d'être chargé au lancement de l'application
+const UserDetail = () => import('../pages/users/UserDetails.vue');
+const ProductDetails = () => import('../pages/products/ProductDetails.vue');
+const ProductPublication = () => import('../pages/products/ProductPublication.vue');
+const RequestRecivied = () => import('../pages/requests/RequestRecivied.vue');
+const ContactUser = () => import('../pages/requests/ContactUser.vue');
+const UserAuth = () => import('../pages/auth/UserAuth.vue');
 
 //import vuex store
 import store from '../store/index.js';
